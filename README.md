@@ -1,6 +1,8 @@
 # create-react-app-jerry
 
-Empty project.
+## Ref
+
+https://codeburst.io/react-bake-from-scratch-or-box-javascript-version-part-1-149994a1adda
 
 ## Building and running on localhost
 
