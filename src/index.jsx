@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import '@babel/polyfill';
 import 'whatwg-fetch';
-
+import jpg from './jpg.png';
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
   render() {
     const { name } = this.props;
     // eslint-disable-next-line react/jsx-one-expression-per-line
-    return <div>Hello {name}</div>;
+    return (
+      <div>
+        Hello
+        {name}
+        <img alt="" src={jpg} />
+      </div>
+    );
   }
 }
 
