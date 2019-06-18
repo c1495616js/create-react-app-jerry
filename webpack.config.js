@@ -1,45 +1,45 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpakcPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 function NothingPlugin() {
-  this.apply = function(){};
+  // eslint-disable-next-line func-names
+  this.apply = function() {};
 }
 
-const config = (env) => ({
-  entry: './src/index.js',
+const config = env => ({
+  entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
+      {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       }
     ]
   },
   plugins: [
     new HtmlWebpakcPlugin({
-      template: 'public/index.html'
+      template: 'public/index.html',
     }),
-    env && env.analyze
-      ? new BundleAnalyzerPlugin()
-      : new NothingPlugin()
+    env && env.analyze ? new BundleAnalyzerPlugin() : new NothingPlugin()
   ],
   resolve: {
-    extensions: [
-      '.mjs',
-      '.js',
-      '.jsx'
-    ]
+    extensions: ['.mjs', '.js', '.jsx'],
   },
   devServer: {
-    contentBase: './dist'
-  }
+    contentBase: './dist',
+  },
 });
 
 module.exports = config;
