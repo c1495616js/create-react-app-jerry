@@ -1,8 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpakcPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const config = {
+function NothingPlugin() {
+  this.apply = function(){};
+}
+
+const config = (env) => ({
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -20,7 +25,10 @@ const config = {
   plugins: [
     new HtmlWebpakcPlugin({
       template: 'public/index.html'
-    })
+    }),
+    env && env.analyze
+      ? new BundleAnalyzerPlugin()
+      : new NothingPlugin()
   ],
   resolve: {
     extensions: [
@@ -32,6 +40,6 @@ const config = {
   devServer: {
     contentBase: './dist'
   }
-}
+});
 
 module.exports = config;
